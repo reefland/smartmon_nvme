@@ -27,8 +27,17 @@
 
     * When using Node Exporter deployed in Kubernetes, the path to the host directory outside the pod will be different, such as: `/host/root/var/lib/node_exporter/textfile_collector`
 
-2. Place `smartmon.sh` in `/usr/local/bin/` make sure it is executable.
-3. Create a cron entry to run `smartmon.sh` ar regular interval such as every 5 minutes:
+2. Place `smartmon.sh` in `/usr/local/bin/` and give it execute permissions.
+
+3. Create a cron entry to run `smartmon.sh` at regular interval such as every 5 minutes:
+
+    ```shell
+    $ sudo crontab -e
+
+    # Opens in text editor
+    ```
+
+    Add the following line to run every 5 minutes:
 
     ```text
     */5 * * * * /usr/local/bin/smartmon.sh | /usr/bin/sponge /var/lib/node_exporter/textfile_collector/smartmon.prom
