@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+#
 # Script informed by the collectd monitoring script for smartmontools (using smartctl)
 # originally by Samuel B. <samuel_._behan_(at)_dob_._sk> (c) 2012.
 # source at: http://devel.dob.sk/collectd-scripts/
@@ -8,6 +9,19 @@
 
 # Formatting done via shfmt -i 2
 # https://github.com/mvdan/sh
+
+# Check if we are root
+if [ "$EUID" -ne 0 ]; then
+  echo "${0##*/}: root is required to access smartctl daemon, please run as root!" >&2
+  exit 1
+fi
+
+# Check if smartctl is installed
+if ! command -v smartctl >/dev/null 2>&1; then
+  echo "${0##*/}: smartctl is not installed. Aborting." >&2
+  exit 1
+fi
+
 set -euo pipefail
 IFS=$'\n\t'
 
@@ -234,7 +248,7 @@ format_output() {
     awk -F'{' "${output_format_awk}"
 }
 
-smartctl_version="$(smartctl -V | head -n1 | awk '$1 == "smartctl" {print $2}')"
+smartctl_version="$(/usr/sbin/smartctl -V | head -n1 | awk '$1 == "smartctl" {print $2}')"
 
 echo "smartctl_version{version=\"${smartctl_version}\"} 1" | format_output
 
@@ -242,7 +256,7 @@ if [[ "$(expr "${smartctl_version}" : '\([0-9]*\)\..*')" -lt 6 ]]; then
   exit
 fi
 
-device_list="$(smartctl --scan-open | awk '/^\/dev/{print $1 "|" $3}')"
+device_list="$(/usr/sbin/smartctl --scan-open | awk '/^\/dev/{print $1 "|" $3}')"
 
 for device in ${device_list}; do
   disk="$(echo "${device}" | cut -f1 -d'|')"
@@ -250,7 +264,7 @@ for device in ${device_list}; do
   active=1
   echo "smartctl_run{disk=\"${disk}\",type=\"${type}\"}" "$(TZ=UTC date '+%s')"
   # Check if the device is in a low-power mode
-  smartctl -n standby -d "${type}" "${disk}" >/dev/null || active=0
+  /usr/sbin/smartctl -n standby -d "${type}" "${disk}" >/dev/null || active=0
   echo "device_active{disk=\"${disk}\",type=\"${type}\"}" "${active}"
   # Skip further metrics to prevent the disk from spinning up
   test ${active} -eq 0 && continue
@@ -258,7 +272,7 @@ for device in ${device_list}; do
   # Get the SMART information and health,
   # Allow non-zero exit code and store it
   set +e
-  smart_info="$(smartctl -i -H -d "${type}" "${disk}")"
+  smart_info="$(/usr/sbin/smartctl -i -H -d "${type}" "${disk}")"
   status=$?
   set -e
 
@@ -270,11 +284,11 @@ for device in ${device_list}; do
 
   # Get the SMART attributes
   case ${type} in
-  sat) smartctl -A -d "${type}" "${disk}" | parse_smartctl_attributes "${disk_labels}" || true ;;
-  sat+megaraid*) smartctl -A -d "${type}" "${disk}" | parse_smartctl_attributes "${disk_labels}" || true ;;
-  scsi) smartctl -A -d "${type}" "${disk}" | parse_smartctl_scsi_attributes "${disk_labels}" || true ;;
-  megaraid*) smartctl -A -d "${type}" "${disk}" | parse_smartctl_scsi_attributes "${disk_labels}" || true ;;
-  nvme*) smartctl -A -d "${type}" "${disk}" | parse_smartctl_nvme_attributes "${disk_labels}" || true ;;
+  sat) /usr/sbin/smartctl -A -d "${type}" "${disk}" | parse_smartctl_attributes "${disk_labels}" || true ;;
+  sat+megaraid*) /usr/sbin/smartctl -A -d "${type}" "${disk}" | parse_smartctl_attributes "${disk_labels}" || true ;;
+  scsi) /usr/sbin/smartctl -A -d "${type}" "${disk}" | parse_smartctl_scsi_attributes "${disk_labels}" || true ;;
+  megaraid*) /usr/sbin/smartctl -A -d "${type}" "${disk}" | parse_smartctl_scsi_attributes "${disk_labels}" || true ;;
+  nvme*) /usr/sbin/smartctl -A -d "${type}" "${disk}" | parse_smartctl_nvme_attributes "${disk_labels}" || true ;;
   *)
     (echo >&2 "disk type is not sat, scsi, nvme or megaraid but ${type}")
     exit
