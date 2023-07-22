@@ -47,14 +47,37 @@
 
 ---
 
+### Quick Test
+
+To check if `smartmon.sh` is able to collect metrics from `smartctl`:
+
+```shell
+$ sudo smartmon.sh | grep smartmon_device_active
+
+# HELP smartmon_device_active SMART metric device_active
+# TYPE smartmon_device_active gauge
+smartmon_device_active{disk="/dev/nvme0",type="nvme"} 1
+smartmon_device_active{disk="/dev/sda",type="sat"} 1
+```
+
+* Indicates 1 SATA device (/dev/sda) and 1 NVMe device (/dev/nvme) are being monitored on this host.
+
+---
+
+### Prometheus Metrics Check
+
 Once the cron job has executed, you should find metrics within Prometheus:
 
 ![Prometheus smartmon metrics](./images/prometheus_metrics.png)
 
+* If no metrics are being collected, review the Node Exporter collection logs.
+
 ---
+
+### Deploy Grafana Dashboard
 
 The Grafana dashboard `smartmon.json` can be imported to Grafana to provide visualization of monitored devices:
 
 ![Grafana Dashboard](./images/grafana_dashboard.png)
 
-* Visualization of storage devices monitored within my Kubernetes cluster.
+* Visualization shows storage devices monitored within my Kubernetes cluster.
