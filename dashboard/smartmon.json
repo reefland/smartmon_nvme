@@ -21,7 +21,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.0.1"
+      "version": "10.0.3"
     },
     {
       "type": "panel",
@@ -122,7 +122,6 @@
           "decimals": 0,
           "links": [],
           "mappings": [],
-          "max": 60,
           "min": 20,
           "thresholds": {
             "mode": "absolute",
@@ -244,7 +243,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "10.0.1",
+      "pluginVersion": "10.0.3",
       "targets": [
         {
           "datasource": {
@@ -310,7 +309,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "10.0.1",
+      "pluginVersion": "10.0.3",
       "targets": [
         {
           "datasource": {
@@ -519,7 +518,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.1",
+      "pluginVersion": "10.0.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -729,7 +728,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.0.1",
+      "pluginVersion": "10.0.3",
       "targets": [
         {
           "datasource": {
@@ -922,7 +921,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.0.1",
+      "pluginVersion": "10.0.3",
       "targets": [
         {
           "datasource": {
@@ -1005,7 +1004,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "10.0.1",
+      "pluginVersion": "10.0.3",
       "targets": [
         {
           "datasource": {
@@ -1197,8 +1196,8 @@
     ]
   },
   "timezone": "browser",
-  "title": "S.M.A.R.T. SATA/NVme Disk Data",
+  "title": "SMART disk data",
   "uid": "eak7BovZk",
-  "version": 20,
+  "version": 21,
   "weekStart": ""
 }
