@@ -21,7 +21,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.0.3"
+      "version": "10.4.0"
     },
     {
       "type": "panel",
@@ -90,6 +90,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -103,6 +104,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -148,7 +150,6 @@
       },
       "id": 1,
       "interval": "",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -241,9 +242,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.4.0",
       "targets": [
         {
           "datasource": {
@@ -294,7 +297,6 @@
         "y": 0
       },
       "id": 12,
-      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -307,9 +309,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.4.0",
       "targets": [
         {
           "datasource": {
@@ -346,6 +350,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -359,6 +364,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "stepAfter",
             "lineWidth": 1,
             "pointSize": 5,
@@ -424,7 +430,6 @@
         "y": 0
       },
       "id": 5,
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -512,13 +517,12 @@
       },
       "lines": true,
       "linewidth": 1,
-      "links": [],
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.4.0",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -714,7 +718,6 @@
       },
       "id": 10,
       "interval": "1h",
-      "links": [],
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -728,7 +731,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.4.0",
       "targets": [
         {
           "datasource": {
@@ -906,7 +909,6 @@
         "y": 8
       },
       "id": 3,
-      "links": [],
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -921,7 +923,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.4.0",
       "targets": [
         {
           "datasource": {
@@ -991,8 +993,9 @@
         "y": 18
       },
       "id": 8,
-      "links": [],
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -1002,9 +1005,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "10.0.3",
+      "pluginVersion": "10.4.0",
       "targets": [
         {
           "datasource": {
@@ -1026,8 +1030,7 @@
     }
   ],
   "refresh": "1m",
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [
     "prometheus",
     "node_exporter",
