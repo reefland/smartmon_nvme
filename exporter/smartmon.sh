@@ -6,6 +6,7 @@
 
 # Updated to support nvme attributes from smartmontools and not use scsi attributes
 # by Richard J. Durso - source at: https://github.com/reefland/smartmon_nvme
+# Released: 04/27/2024
 
 # Formatting done via shfmt -i 2
 # https://github.com/mvdan/sh
@@ -55,6 +56,7 @@ media_wearout_indicator
 wear_leveling_count
 nand_writes_1gib
 offline_uncorrectable
+percent_lifetime_remain
 power_cycle_count
 power_on_hours
 program_fail_count
