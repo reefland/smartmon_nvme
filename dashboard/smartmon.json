@@ -174,7 +174,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "avg(smartmon_temperature_celsius_raw_value{instance=~\"$instance\",disk=~\"$disk\",type=~\"$type\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"}) by (device_model,serial_number)",
+          "expr": "avg(smartmon_temperature_celsius_raw_value{kubernetes_node=~\"$node\",disk=~\"$disk\",type=~\"$type\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"}) by (device_model,serial_number)",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -189,7 +189,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "avg(smartmon_airflow_temperature_cel_raw_value{instance=~\"$instance\",disk=~\"$disk\",type=~\"$type\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"}) by (device_model,serial_number)",
+          "expr": "avg(smartmon_airflow_temperature_cel_raw_value{kubernetes_node=~\"$node\",disk=~\"$disk\",type=~\"$type\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"}) by (device_model,serial_number)",
           "hide": false,
           "instant": false,
           "legendFormat": "{{device_model}} (S/N: {{serial_number}})",
@@ -254,7 +254,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum(smartmon_device_active{instance=~\"$instance\",disk=~\"$disk\",type=~\"$type\"})",
+          "expr": "sum(smartmon_device_active{kubernetes_node=~\"$node\",disk=~\"$disk\",type=~\"$type\"})",
           "instant": false,
           "range": true,
           "refId": "A"
@@ -321,7 +321,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "count(smartmon_device_active{instance=~\"$instance\",disk=~\"$disk\",type=~\"$type\"}) - count(smartmon_device_smart_healthy{instance=~\"$instance\",disk=~\"$disk\",type=~\"$type\"})",
+          "expr": "count(smartmon_device_active{kubernetes_node=~\"$node\",disk=~\"$disk\",type=~\"$type\"}) - count(smartmon_device_smart_healthy{instance=~\"$instance\",disk=~\"$disk\",type=~\"$type\"})",
           "format": "table",
           "instant": true,
           "intervalFactor": 1,
@@ -451,11 +451,13 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "smartmon_reallocated_sector_ct_raw_value{instance=~\"$instance\",disk=~\"$disk\",type=~\"$type\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"} > 0",
+          "editorMode": "code",
+          "expr": "smartmon_reallocated_sector_ct_raw_value{kubernetes_node=~\"$node\",disk=~\"$disk\",type=~\"$type\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"} > 0",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "Reallocated {{disk}}",
+          "range": true,
           "refId": "B"
         },
         {
@@ -463,11 +465,13 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "smartmon_current_pending_sector_raw_value{instance=~\"$instance\",disk=~\"$disk\",type=~\"$type\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"} > 0",
+          "editorMode": "code",
+          "expr": "smartmon_current_pending_sector_raw_value{kubernetes_node=~\"$node\",disk=~\"$disk\",type=~\"$type\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"} > 0",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "Pending {{disk}}",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -536,12 +540,14 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "avg(smartmon_raw_read_error_rate_raw_value{instance=~\"$instance\",disk=~\"$disk\",type=~\"$type\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"}) by (device_model,serial_number) > 0",
+          "editorMode": "code",
+          "expr": "avg(smartmon_raw_read_error_rate_raw_value{kubernetes_node=~\"$node\",disk=~\"$disk\",type=~\"$type\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"}) by (device_model,serial_number) > 0",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "{{device_model}} (S/N: {{serial_number}})",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -602,10 +608,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -699,12 +701,12 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "instance"
+              "options": "kubernetes_node"
             },
             "properties": [
               {
                 "id": "displayName",
-                "value": "Instance"
+                "value": "Node"
               }
             ]
           }
@@ -729,7 +731,13 @@
           ],
           "show": false
         },
-        "showHeader": true
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Power On Time"
+          }
+        ]
       },
       "pluginVersion": "10.4.1",
       "targets": [
@@ -739,7 +747,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "max(smartmon_power_on_hours_raw_value{instance=~\"$instance\",disk=~\"$disk\",type=~\"$type\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"}) by (instance,device_model,serial_number)",
+          "expr": "max(smartmon_power_on_hours_raw_value{kubernetes_node=~\"$node\",disk=~\"$disk\",type=~\"$type\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"}) by (kubernetes_node,device_model,serial_number)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -753,7 +761,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "max(smartmon_power_cycle_count_raw_value{instance=~\"$instance\",disk=~\"$disk\",type=~\"$type\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"}) by (instance,device_model,serial_number)",
+          "expr": "max(smartmon_power_cycle_count_raw_value{kubernetes_node=~\"$node\",disk=~\"$disk\",type=~\"$type\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"}) by (kubernetes_node,device_model,serial_number)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -872,19 +880,19 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Disk"
+                "value": "Device"
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "instance"
+              "options": "kubernetes_node"
             },
             "properties": [
               {
                 "id": "displayName",
-                "value": "Instance"
+                "value": "Node"
               }
             ]
           },
@@ -931,7 +939,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "(smartmon_total_lbas_written_raw_value{instance=~\"$instance\",disk=~\"$disk\",type=~\"$type\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"} * on(disk,instance,device_model,serial_number) smartmon_device_sector_size_logical)",
+          "expr": "(smartmon_total_lbas_written_raw_value{kubernetes_node=~\"$node\",disk=~\"$disk\",type=~\"$type\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"} * on(disk,kubernetes_node,device_model,serial_number) smartmon_device_sector_size_logical)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -1016,7 +1024,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sort_desc(100 - smartmon_wear_leveling_count_value {instance=~\"$instance\",disk=~\"$disk\",type=~\"$type\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"})\n",
+          "expr": "sort_desc(100 - smartmon_wear_leveling_count_value {kubernetes_node=~\"$node\",disk=~\"$disk\",type=\"sat\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"} or (100 - smartmon_percent_lifetime_remain_value {kubernetes_node=~\"$node\",disk=~\"$disk\",type=\"sat\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"}))",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1025,7 +1033,84 @@
           "refId": "A"
         }
       ],
-      "title": "Wear Level on SSDs",
+      "title": "Wear Level on SATA Devices",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "displayName": "",
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "id": 14,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "10.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "sort_desc(100 - smartmon_wear_leveling_count_value {kubernetes_node=~\"$node\",disk=~\"$disk\",type=\"nvme\",serial_number=~\"$serial_number\",model_family=~\"$model_family\",device_model=~\"$device_model\"})\n",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{kubernetes_node}}{{disk}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Wear Level on NVMe Devices",
       "type": "gauge"
     }
   ],
@@ -1044,13 +1129,18 @@
           "type": "prometheus",
           "uid": "${DS_PROMETHEUS}"
         },
-        "definition": "",
+        "definition": "label_values(smartmon_smartctl_version,kubernetes_node)",
         "hide": 0,
         "includeAll": true,
+        "label": "",
         "multi": true,
-        "name": "instance",
+        "name": "node",
         "options": [],
-        "query": "label_values(smartmon_smartctl_version, instance)",
+        "query": {
+          "qryType": 1,
+          "query": "label_values(smartmon_smartctl_version,kubernetes_node)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1173,7 +1263,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {
@@ -1199,7 +1289,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "SMART disk data",
+  "title": "SMARTmon Exporter Dashboard",
   "uid": "eak7BovZk",
   "version": 22,
   "weekStart": ""
