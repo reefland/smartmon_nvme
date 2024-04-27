@@ -21,7 +21,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.4.0"
+      "version": "10.4.1"
     },
     {
       "type": "panel",
@@ -246,7 +246,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "datasource": {
@@ -313,7 +313,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "datasource": {
@@ -522,7 +522,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "10.4.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -731,7 +731,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "datasource": {
@@ -923,7 +923,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "datasource": {
@@ -1008,7 +1008,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "datasource": {
@@ -1021,7 +1021,7 @@
           "instant": true,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{instance}}{{disk}}",
+          "legendFormat": "{{kubernetes_node}}{{disk}}",
           "refId": "A"
         }
       ],
@@ -1173,7 +1173,7 @@
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -1201,6 +1201,6 @@
   "timezone": "browser",
   "title": "SMART disk data",
   "uid": "eak7BovZk",
-  "version": 21,
+  "version": 22,
   "weekStart": ""
 }
