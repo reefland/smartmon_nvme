@@ -81,3 +81,17 @@ The Grafana dashboard `smartmon.json` can be imported to Grafana to provide visu
 ![Grafana Dashboard](./images/grafana_dashboard.png)
 
 * Visualization shows storage devices monitored within my Kubernetes cluster.
+
+NOTE - The dashboard uses a label `kubernetes_node` instead of the Node Exporter `instance` (IP address and port).  This label is added with a Prometheus `relabeling` such as:
+
+```yaml
+relabelings:
+  - action: replace
+    regex: (.*)
+    replacement: $1
+    sourceLabels: ["__meta_kubernetes_pod_node_name"]
+    targetLabel: kubernetes_node
+```
+
+* The dashboard will not render correctly without this label.
+  * You could manually replace all the `kubernetes_node` references with `instance` if you are unable to add the label.
