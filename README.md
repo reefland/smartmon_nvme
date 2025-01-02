@@ -1,6 +1,12 @@
-# SMARTmon Exporter with Dashboard
+# SMARTmon Exporter with Dashboard - Archived
 
-`smartmon` is a [Textfile Collector](https://github.com/prometheus/node_exporter#textfile-collector) for Prometheus Node Exporter to gather information on SATA HDDs, SSDs and NVMe devices.  A Grafana Dashboard for this exporter is included.
+**NOTE:** I'm no longer supporting this exporter, it is not needed.  Use the [Prometheus smartctl-exporter](https://github.com/prometheus-community/smartctl_exporter) instead.  I've converted my exporter dashboard to be compatible with `smartctl-exporter`.  Use Grafana Dashboard ID: `22604` for `smartctl-exporter`.
+
+![smartctl-exporter dashboard](./images/new_smartctl_exporter_dashboard.png)
+
+---
+
+`smartmon` _was_ a [Textfile Collector](https://github.com/prometheus/node_exporter#textfile-collector) for Prometheus Node Exporter to gather information on SATA HDDs, SSDs and NVMe devices.  A Grafana Dashboard for this exporter is included.
 
 ## Requirements
 
