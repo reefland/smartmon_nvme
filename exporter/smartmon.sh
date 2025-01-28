@@ -6,7 +6,7 @@
 
 # Updated to support nvme attributes from smartmontools and not use scsi attributes
 # by Richard J. Durso - source at: https://github.com/reefland/smartmon_nvme
-# Released: 04/27/2024
+# Released: 01/28/2025
 
 # Formatting done via shfmt -i 2
 # https://github.com/mvdan/sh
@@ -144,7 +144,7 @@ extract_labels_from_smartctl_info() {
   local model_family='<None>' device_model='<None>' serial_number='<None>' fw_version='<None>' vendor='<None>' product='<None>' revision='<None>' lun_id='<None>'
   while read -r line; do
     info_type="$(echo "${line}" | cut -f1 -d: | tr ' ' '_')"
-    info_value="$(echo "${line}" | cut -f2- -d: | sed 's/^ \+//g' | sed 's/"/\\"/')"
+    info_value="$(echo "${line}" | cut -f2- -d: | sed 's/^ \+//g' | sed 's/"/'"'"'/g')"
     case "${info_type}" in
     Model_Family) model_family="${info_value}" ;;
     Device_Model) device_model="${info_value}" ;;
